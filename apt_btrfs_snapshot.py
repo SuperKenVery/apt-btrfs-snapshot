@@ -133,8 +133,7 @@ class AptBtrfsSnapshot(object):
         for entry in self.fstab:
             if (
                     entry.mountpoint == "/" and
-                    entry.fstype == "btrfs" and
-                    "subvol=@" in entry.options):
+                    entry.fstype == "btrfs" ):
                 return entry
         return None
 
