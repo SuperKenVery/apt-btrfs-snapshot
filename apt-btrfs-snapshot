@@ -91,7 +91,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     res = False
-    if args.command == "supported":
+    if not hasattr(args,'command'):
+        parser.print_help()
+    elif args.command == "supported":
         res = apt_btrfs.snapshots_supported()
         if res:
             print(_("Supported"))
