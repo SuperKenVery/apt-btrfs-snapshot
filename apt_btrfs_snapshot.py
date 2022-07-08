@@ -87,8 +87,8 @@ class LowLevelCommands(object):
     """ lowlevel commands invoked to perform various tasks like
         interact with mount and btrfs tools
     """
-    def mount(self, fs_spec, mountpoint):
-        ret = subprocess.call(["mount", fs_spec, mountpoint])
+    def mount(self, options, fs_spec, mountpoint):
+        ret = subprocess.call(["mount", "-o "+options, fs_spec, mountpoint])
         return ret == 0
 
     def umount(self, mountpoint):
@@ -147,7 +147,7 @@ class AptBtrfsSnapshot(object):
     def mount_btrfs_root_volume(self):
         uuid = self._uuid_for_mountpoint("/")
         mountpoint = tempfile.mkdtemp(prefix="apt-btrfs-snapshot-mp-")
-        if not self.commands.mount(uuid, mountpoint):
+        if not self.commands.mount("subvolid=5", uuid, mountpoint):
             return None
         self._btrfs_root_mountpoint = mountpoint
         return self._btrfs_root_mountpoint
